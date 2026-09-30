@@ -4,8 +4,8 @@ const { body, param } = require('express-validator')
 const uangField = (fieldName, label) =>
     body(fieldName)
         .optional()
-        .isFloat({ min: 0 })
-        .withMessage(`${label} harus berupa angka dan tidak boleh negatif`)
+        .isFloat()
+        .withMessage(`${label} harus berupa angka`)
         .toFloat()
 
 // CREATE Transaksi Internet
@@ -47,6 +47,12 @@ const createTransaksiInternet = [
     // ─── SALDO 
     uangField('saldo_cash', 'Saldo Cash'),
     uangField('saldo_bank', 'Saldo Bank'),
+
+    // ─── EXPENSE SOURCE 
+    body('expense_source')
+        .optional()
+        .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
+        .trim(),
 ]
 
 // UPDATE Transaksi Internet
@@ -92,6 +98,12 @@ const updateTransaksiInternet = [
     // ─── SALDO 
     uangField('saldo_cash', 'Saldo Cash'),
     uangField('saldo_bank', 'Saldo Bank'),
+
+    // ─── EXPENSE SOURCE 
+    body('expense_source')
+        .optional()
+        .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
+        .trim(),
 ]
 
 // GET BY UUID

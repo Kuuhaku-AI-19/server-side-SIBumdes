@@ -40,9 +40,9 @@ module.exports = (sequelize, DataTypes) => {
         unit_usaha: {
            type: DataTypes.ENUM(
             "internet",
-            "Resik",
-            "Niaga",
-            "Mina"
+            "resik",
+            "niaga",
+            "mina"
            ),
            allowNull: false
         },
@@ -80,6 +80,26 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.resik, {
             foreignKey: 'user_id',
             as: 'resik'
+        });
+        
+        User.hasMany(models.niaga, {
+            foreignKey: 'user_id',
+            as: 'niaga'
+        });
+        
+        User.hasMany(models.mina, {
+            foreignKey: 'user_id',
+            as: 'mina'
+        });
+        
+        User.hasMany(models.customer_internet, {
+            foreignKey: 'user_id',
+            as: 'customer_internet'
+        });
+        
+        User.hasMany(models.customer_resik, {
+            foreignKey: 'user_id',
+            as: 'customer_resik'
         });
     }
     

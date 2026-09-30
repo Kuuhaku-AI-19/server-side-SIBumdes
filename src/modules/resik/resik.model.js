@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: 2026,
             },
 
-            // ─── DEBET: KAS 
+            // DEBET: KAS 
             kas_cash: {
                 type: DataTypes.DECIMAL(15, 2),
                 allowNull: false,
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
                 comment: 'Debet kas (bank)',
             },
 
-            // ─── DEBET: PENERIMAAN IURAN 
+            // DEBET: PENERIMAAN IURAN 
             iuran_cash: {
                 type: DataTypes.DECIMAL(15, 2),
                 allowNull: false,
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
                 comment: 'Penerimaan iuran (bank)',
             },
 
-            // ─── KREDIT: BIAYA 
+            // KREDIT: BIAYA 
             biaya_insentif: {
                 type: DataTypes.DECIMAL(15, 2),
                 allowNull: false,
@@ -90,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
                 comment: 'Kredit beban setor',
             },
 
-            // ─── KREDIT: LAINNYA 
+            // KREDIT: LAINNYA 
             kredit_belanja_lainnya: {
                 type: DataTypes.DECIMAL(15, 2),
                 allowNull: false,
@@ -104,12 +104,25 @@ module.exports = (sequelize, DataTypes) => {
                 comment: 'Kredit admin fee',
             },
 
+            // ─── EXPENSE SOURCE
+            expense_source: {
+                type: DataTypes.STRING(50),
+                allowNull: true,
+                comment: 'Sumber dana untuk pengeluaran (kas_cash atau kas_bank)',
+            },
+
             // ─── SALDO 
-            saldo: {
+            saldo_cash: {
                 type: DataTypes.DECIMAL(15, 2),
                 allowNull: false,
                 defaultValue: 0,
-                comment: 'Saldo akhir',
+                comment: 'Saldo akhir (tunai)',
+            },
+            saldo_bank: {
+                type: DataTypes.DECIMAL(15, 2),
+                allowNull: false,
+                defaultValue: 0,
+                comment: 'Saldo akhir (bank)',
             },
 
             // ─── AUDIT 

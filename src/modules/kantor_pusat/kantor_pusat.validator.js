@@ -4,8 +4,8 @@ const { body, param } = require('express-validator')
 const uangField = (fieldName, label) =>
     body(fieldName)
         .optional()
-        .isFloat({ min: 0 })
-        .withMessage(`${label} harus berupa angka dan tidak boleh negatif`)
+        .isFloat()
+        .withMessage(`${label} harus berupa angka `)
         .toFloat()
 
 // CREATE Transaksi Kantor Pusat
@@ -40,6 +40,12 @@ const createTransaksiKantor = [
     // ─── DEBET 
     uangField('debet_bank', 'Debet Bank'),
     uangField('debet_cash', 'Debet Cash'),
+    
+    // ─── PENGELUARAN SOURCE 
+    body('expense_source')
+        .optional()
+        .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
+        .trim(),
 
     // ─── KREDIT 
     uangField('kredit_insentif',       'Kredit Insentif'),
@@ -47,7 +53,8 @@ const createTransaksiKantor = [
     uangField('kredit_transaksi_bank', 'Kredit Transaksi Bank'),
 
     // ─── SALDO 
-    uangField('saldo', 'Saldo'),
+    uangField('saldo_cash', 'Saldo Cash'),
+    uangField('saldo_bank', 'Saldo Bank'),
 ]
 
 // UPDATE Transaksi Kantor Pusat
@@ -86,6 +93,12 @@ const updateTransaksiKantor = [
     // ─── DEBET 
     uangField('debet_bank', 'Debet Bank'),
     uangField('debet_cash', 'Debet Cash'),
+    
+    // ─── PENGELUARAN SOURCE 
+    body('expense_source')
+        .optional()
+        .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
+        .trim(),
 
     // ─── KREDIT 
     uangField('kredit_insentif',       'Kredit Insentif'),
@@ -93,7 +106,8 @@ const updateTransaksiKantor = [
     uangField('kredit_transaksi_bank', 'Kredit Transaksi Bank'),
 
     // ─── SALDO 
-    uangField('saldo', 'Saldo'),
+    uangField('saldo_cash', 'Saldo Cash'),
+    uangField('saldo_bank', 'Saldo Bank'),
 ]
 
 // GET BY UUID

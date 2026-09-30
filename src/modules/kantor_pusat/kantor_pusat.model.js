@@ -70,10 +70,20 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 defaultValue: 0,
             },
-            saldo: {
+            saldo_cash: {
                 type: DataTypes.DECIMAL(15, 2),
                 allowNull: false,
                 defaultValue: 0,
+            },
+            saldo_bank: {
+                type: DataTypes.DECIMAL(15, 2),
+                allowNull: false,
+                defaultValue: 0,
+            },
+            expense_source: {
+                type: DataTypes.STRING(50),
+                allowNull: true,
+                comment: 'Sumber dana untuk pengeluaran (misal: kas_cash, kas_bank_jateng)',
             },
             rekening_bank: {
                 type: DataTypes.ENUM('bank_bri', 'bank_jateng'),

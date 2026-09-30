@@ -9,9 +9,16 @@ beforeAll(async () => {
 
 afterEach(async () => {
     // Kosongkan semua data setelah setiap test agar bersih
+    // Transaction/customer tables first (FK dependencies on user)
+    await db.niaga.destroy({ where: {} });
+    await db.mina.destroy({ where: {} });
+    await db.customer_internet.destroy({ where: {} });
+    await db.customer_resik.destroy({ where: {} });
+    await db.rekening.destroy({ where: {} });
     await db.kantor_pusat.destroy({ where: {} });
     await db.resik.destroy({ where: {} });
     await db.internet.destroy({ where: {} });
+    // user last (referenced by FK in other tables)
     await db.user.destroy({ where: {} });
 });
 

@@ -36,6 +36,13 @@ db.kantor_pusat = require('../modules/kantor_pusat/kantor_pusat.model')(sequeliz
 db.internet = require('../modules/internet/internet.model')(sequelize, DataTypes)
 db.resik = require('../modules/resik/resik.model')(sequelize, DataTypes)
 
+// ─── Model Baru ────
+db.niaga = require('../modules/niaga/niaga.model')(sequelize, DataTypes)
+db.mina = require('../modules/mina/mina.model')(sequelize, DataTypes)
+db.rekening = require('../modules/rekening/rekening.model')(sequelize, DataTypes)
+db.customer_internet = require('../modules/internet/customer/customer_internet.model')(sequelize, DataTypes)
+db.customer_resik = require('../modules/resik/customer/customer_resik.model')(sequelize, DataTypes)
+
 // Terapkan relasi (Associations) jika ada
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {

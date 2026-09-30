@@ -1,9 +1,11 @@
 const HttpError = require('../error/HttpError')
+const logger = require('../lib/logger')
 
 function errorHandler(error, req, res, next) {
     if (error instanceof HttpError) {
+        logger.warn('http.error', { statusCode: error.statusCode, message: error.message });
         res.status(error.statusCode).json({
-            success: true,
+            success: false,
             message: error.message
         })
         
@@ -12,18 +14,19 @@ function errorHandler(error, req, res, next) {
     
     if(process.env.NODE_ENV === "development") {
         if(error instanceof Error) {
+            logger.error('unhandled.error', { message: error.message, stack: error.stack });
             return res.status(500).json({
-                success: true,
+                success: false,
                 message: error.message
             })
         }
         
     }
     
-    console.error(error)
+    logger.error('unhandled.error', { message: error.message, stack: error.stack });
     
     return res.status(500).json({
-        status: false,
+        success: false,
         message: "Server Error"
     })
     

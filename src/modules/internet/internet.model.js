@@ -98,6 +98,13 @@ module.exports = (sequelize, DataTypes) => {
                 comment: 'Pengeluaran belanja / lainnya',
             },
 
+            // ─── EXPENSE SOURCE
+            expense_source: {
+                type: DataTypes.STRING(50),
+                allowNull: true,
+                comment: 'Sumber dana untuk pengeluaran (kas_cash atau kas_bank)',
+            },
+
             // ─── SALDO 
             saldo_cash: {
                 type: DataTypes.DECIMAL(15, 2),

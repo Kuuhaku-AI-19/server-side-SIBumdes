@@ -1,10 +1,14 @@
 const InternetService = require('./internet.service')
 const NotFoundError = require('../../error/NotfoundError')
+const logger = require('../../lib/logger')
+
+const MODULE = 'internet';
 
 class InternetController {
     
     async getAll(req, res, next) {
         try{
+            logger.debug(`${MODULE}.read`, { operation: 'getAll' });
             const transaction = await InternetService.getAll()
             if(!transaction) throw new NotFoundError("Transaksi tidak di temukan")
             
@@ -14,6 +18,7 @@ class InternetController {
                 "data": transaction
             })
         } catch(e) {
+            logger.error(`${MODULE}.read.failed`, { operation: 'getAll', message: e.message });
             next(e)
         }
     }
@@ -22,6 +27,8 @@ class InternetController {
         try{
             const transaction = await InternetService.getByUuid(req.params.uuid)
             if(!transaction) throw new NotFoundError("Transaksi tidak di temukan")
+            
+            logger.debug(`${MODULE}.read`, { operation: 'getByUuid', id: req.params.uuid });
                 
             res.json({
                 "success":true,
@@ -29,14 +36,17 @@ class InternetController {
                 "data": transaction
             })
         } catch(e) {
+            logger.error(`${MODULE}.read.failed`, { operation: 'getByUuid', message: e.message });
             next(e)
         }
     }
     
     async create(req, res, next) {
         try{
-            const transaction = await InternetService.create(req.body)
+            const transaction = await InternetService.create({ ...req.body, user_id: req.userid, created_by: req.userid, updated_by: req.userid })
             if(!transaction) throw new NotFoundError("Gagal membuat transaksi")
+            
+            logger.info(`${MODULE}.create`, { operation: 'create', id: transaction.id });
                 
             res.json({
                 "success": true,
@@ -44,14 +54,17 @@ class InternetController {
                 "data": transaction
             })
         } catch(e) {
+            logger.error(`${MODULE}.create.failed`, { operation: 'create', message: e.message });
             next(e)
         }
     }
     
     async update(req, res, next) {
         try{
-            const transaction = await InternetService.update(req.params.uuid, req.body)
+            const transaction = await InternetService.update(req.params.uuid, { ...req.body, updated_by: req.userid })
             if(!transaction) throw new NotFoundError("Transaksi tidak di temukan")
+            
+            logger.info(`${MODULE}.update`, { operation: 'update', id: req.params.uuid });
                 
             res.json({
                 "success": true,
@@ -59,6 +72,7 @@ class InternetController {
                 "data": transaction
             })
         } catch(e) {
+            logger.error(`${MODULE}.update.failed`, { operation: 'update', message: e.message });
             next(e)
         }
     }
@@ -67,12 +81,15 @@ class InternetController {
         try{
             const transaction = await InternetService.delete(req.params.uuid)
             if(!transaction) throw new NotFoundError("transaksi tidak di temukan")
+            
+            logger.info(`${MODULE}.delete`, { operation: 'delete', id: req.params.uuid });
                 
             res.json({
                 "success": true,
                 "message": "Transaksi internet berhasil di hapus",
             })
         } catch(e){
+            logger.error(`${MODULE}.delete.failed`, { operation: 'delete', message: e.message });
             next(e)
         }
     }
@@ -83,12 +100,15 @@ class InternetController {
             const data = await InternetService.getDashboardSummary(bulan, tahun)
             if(!data) throw new NotFoundError("data tidak di temukan")
             
+            logger.debug(`${MODULE}.read`, { operation: 'dashboard' });
+            
             res.json({
                 "success": true,
                 "message": "data dashboard internet berhasil di ambil",
                 "data": data
             })
         } catch(e) {
+            logger.error(`${MODULE}.read.failed`, { operation: 'dashboard', message: e.message });
             next(e)
         }
     }
@@ -99,12 +119,15 @@ class InternetController {
             const trend = await InternetService.getTrendSaldo(tahun)
             if(!trend) throw new NotFoundError("Data tidak di temukan")
             
+            logger.debug(`${MODULE}.read`, { operation: 'trendSaldo' });
+            
             res.json({
                 "success": true,
                 "message": "data trend internet berhasil di ambil",
                 "data": trend
             })
         } catch(e) {
+            logger.error(`${MODULE}.read.failed`, { operation: 'trendSaldo', message: e.message });
             next(e)
         }
     }
@@ -115,12 +138,15 @@ class InternetController {
             const expenses = await InternetService.getBreakdownPengeluaran(bulan, tahun)
             if(!expenses) throw new NotFoundError("Tidak ada pengeluaran")
             
+            logger.debug(`${MODULE}.read`, { operation: 'breakdownPengeluaran' });
+            
             res.json({
                 "success": true,
                 "message": "pengeluaran internet berhasil di dapatkan",
                 "data": expenses
             })
         } catch(e) {
+            logger.error(`${MODULE}.read.failed`, { operation: 'breakdownPengeluaran', message: e.message });
             next(e)
         }
     }

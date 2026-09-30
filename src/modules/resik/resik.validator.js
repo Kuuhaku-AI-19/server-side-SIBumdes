@@ -1,11 +1,11 @@
 const { body, param } = require('express-validator')
 
-// ─── Aturan validasi yang dipakai ulang 
+// ─── Field uang: opsional, harus angka (boleh negatif untuk pengeluaran)
 const uangField = (fieldName, label) =>
     body(fieldName)
         .optional()
-        .isFloat({ min: 0 })
-        .withMessage(`${label} harus berupa angka dan tidak boleh negatif`)
+        .isFloat()
+        .withMessage(`${label} harus berupa angka`)
         .toFloat()
 
 // CREATE Transaksi Resik
@@ -29,26 +29,33 @@ const createTransaksiResik = [
         .isInt({ min: 2000, max: 2100 }).withMessage('Tahun tidak valid')
         .toInt(),
 
-    // ─── KAS 
+    // ─── KAS (bisa negatif untuk pengeluaran)
     uangField('kas_cash', 'Kas Cash'),
     uangField('kas_bank', 'Kas Bank'),
 
-    // ─── IURAN 
+    // ─── IURAN
     uangField('iuran_cash', 'Iuran Cash'),
     uangField('iuran_bank', 'Iuran Bank'),
 
-    // ─── BIAYA 
+    // ─── BIAYA OPERASIONAL (nilai positif, maknanya pengeluaran)
     uangField('biaya_insentif',       'Biaya Insentif'),
     uangField('biaya_bbm',            'Biaya BBM'),
     uangField('biaya_cuci_bongkar',   'Biaya Cuci Bongkar'),
     uangField('biaya_beban_setor',    'Biaya Beban Setor'),
-    
+
     // ─── LAINNYA
     uangField('kredit_belanja_lainnya', 'Kredit Belanja Lainnya'),
     uangField('kredit_admin_fee',       'Kredit Admin Fee'),
 
-    // ─── SALDO 
-    uangField('saldo', 'Saldo'),
+    // ─── SALDO
+    uangField('saldo_cash', 'Saldo Cash'),
+    uangField('saldo_bank', 'Saldo Bank'),
+
+    // ─── EXPENSE SOURCE 
+    body('expense_source')
+        .optional()
+        .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
+        .trim(),
 ]
 
 // UPDATE Transaksi Resik
@@ -76,26 +83,24 @@ const updateTransaksiResik = [
         .isInt({ min: 2000, max: 2100 }).withMessage('Tahun tidak valid')
         .toInt(),
 
-    // ─── KAS 
     uangField('kas_cash', 'Kas Cash'),
     uangField('kas_bank', 'Kas Bank'),
-
-    // ─── IURAN 
     uangField('iuran_cash', 'Iuran Cash'),
     uangField('iuran_bank', 'Iuran Bank'),
-
-    // ─── BIAYA 
     uangField('biaya_insentif',       'Biaya Insentif'),
     uangField('biaya_bbm',            'Biaya BBM'),
     uangField('biaya_cuci_bongkar',   'Biaya Cuci Bongkar'),
     uangField('biaya_beban_setor',    'Biaya Beban Setor'),
-    
-    // ─── LAINNYA
     uangField('kredit_belanja_lainnya', 'Kredit Belanja Lainnya'),
     uangField('kredit_admin_fee',       'Kredit Admin Fee'),
+    uangField('saldo_cash', 'Saldo Cash'),
+    uangField('saldo_bank', 'Saldo Bank'),
 
-    // ─── SALDO 
-    uangField('saldo', 'Saldo'),
+    // ─── EXPENSE SOURCE 
+    body('expense_source')
+        .optional()
+        .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
+        .trim(),
 ]
 
 // GET BY UUID

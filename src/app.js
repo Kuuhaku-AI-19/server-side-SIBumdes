@@ -3,12 +3,14 @@ const app = express();
 const { enableCORS, setSecurityHeaders } = require('./middleware/security.middleware');
 const ErrorHandler = require('./middleware/ErrorHandling.middleware')
 const routes = require('./routes')
+const httpLogger = require('./middleware/httpLogger.middleware');
 require('./store/sequelize');
 
 
 app.use(express.json());
 app.use(enableCORS);
 app.use(setSecurityHeaders);
+app.use(httpLogger);
 
 app.use('/api/v1', routes);
 app.use(ErrorHandler);
