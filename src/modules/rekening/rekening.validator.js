@@ -5,17 +5,17 @@ const createRekening = [
     body('nama')
         .notEmpty().withMessage('Nama rekening wajib diisi')
         .isString().withMessage('Nama rekening harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('nomor')
         .notEmpty().withMessage('Nomor rekening wajib diisi')
         .isString().withMessage('Nomor rekening harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('kode_bank')
         .notEmpty().withMessage('Kode bank wajib diisi')
         .isString().withMessage('Kode bank harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('saldo')
         .optional()
@@ -25,7 +25,7 @@ const createRekening = [
     body('deskripsi')
         .optional()
         .isString().withMessage('Deskripsi harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('is_aktif')
         .optional()
@@ -42,17 +42,17 @@ const updateRekening = [
     body('nama')
         .optional()
         .isString().withMessage('Nama rekening harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('nomor')
         .optional()
         .isString().withMessage('Nomor rekening harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('kode_bank')
         .optional()
         .isString().withMessage('Kode bank harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('saldo')
         .optional()
@@ -62,7 +62,7 @@ const updateRekening = [
     body('deskripsi')
         .optional()
         .isString().withMessage('Deskripsi harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('is_aktif')
         .optional()

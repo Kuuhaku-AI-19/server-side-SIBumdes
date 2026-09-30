@@ -5,6 +5,7 @@ const createUserValidator = [
     body('name')
         .notEmpty().withMessage('Nama Wajib Di isi')
         .isString().withMessage("Nama harus berupa String")
+        .escape()
         .isLength({ max: 255 }).withMessage("Maksimal Panjang Nama 255 Karakter"),
     body('email')
         .notEmpty().withMessage("Email wajib Di isi")
@@ -25,6 +26,7 @@ const updateUserValidator = [
     body('name')
         .notEmpty().withMessage('Nama Wajib Di isi')
         .isString().withMessage("Nama harus berupa String")
+        .escape()
         .isLength({ max: 255 }).withMessage("Maksimal Panjang Nama 255 Karakter"),
     body('email')
         .notEmpty().withMessage("Email wajib Di isi")

@@ -17,7 +17,7 @@ const createTransaksiMina = [
     body('keterangan')
         .notEmpty().withMessage('Keterangan wajib diisi')
         .isString().withMessage('Keterangan harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('bulan')
         .notEmpty().withMessage('Bulan wajib diisi')
@@ -46,7 +46,7 @@ const updateTransaksiMina = [
     body('keterangan')
         .optional()
         .isString().withMessage('Keterangan harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('bulan')
         .optional()

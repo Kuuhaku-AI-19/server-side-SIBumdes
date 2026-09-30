@@ -7,17 +7,17 @@ const createCustomerInternet = [
     body('nama')
         .notEmpty().withMessage('Nama wajib diisi')
         .isString().withMessage('Nama harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('no_telp')
         .notEmpty().withMessage('Nomor telepon wajib diisi')
         .isString().withMessage('Nomor telepon harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('alamat')
         .optional()
         .isString().withMessage('Alamat harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('status_aktivasi')
         .optional()
@@ -34,17 +34,17 @@ const updateCustomerInternet = [
     body('nama')
         .optional()
         .isString().withMessage('Nama harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('no_telp')
         .optional()
         .isString().withMessage('Nomor telepon harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('alamat')
         .optional()
         .isString().withMessage('Alamat harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('status_aktivasi')
         .optional()

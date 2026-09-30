@@ -17,7 +17,7 @@ const createTransaksiKantor = [
     body('keterangan')
         .notEmpty().withMessage('Keterangan wajib diisi')
         .isString().withMessage('Keterangan harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('bulan')
         .notEmpty().withMessage('Bulan wajib diisi')
@@ -45,7 +45,7 @@ const createTransaksiKantor = [
     body('expense_source')
         .optional()
         .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     // ─── KREDIT 
     uangField('kredit_insentif',       'Kredit Insentif'),
@@ -70,7 +70,7 @@ const updateTransaksiKantor = [
     body('keterangan')
         .optional()
         .isString().withMessage('Keterangan harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('bulan')
         .optional()
@@ -98,7 +98,7 @@ const updateTransaksiKantor = [
     body('expense_source')
         .optional()
         .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     // ─── KREDIT 
     uangField('kredit_insentif',       'Kredit Insentif'),

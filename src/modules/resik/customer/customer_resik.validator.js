@@ -5,12 +5,12 @@ const createCustomerResik = [
     body('nama')
         .notEmpty().withMessage('Nama wajib diisi')
         .isString().withMessage('Nama harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('no_telp')
         .notEmpty().withMessage('Nomor telepon wajib diisi')
         .isString().withMessage('Nomor telepon harus berupa teks')
-        .trim(),
+        .trim().escape(),
 ]
 
 // UPDATE Customer Resik
@@ -22,12 +22,12 @@ const updateCustomerResik = [
     body('nama')
         .optional()
         .isString().withMessage('Nama harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('no_telp')
         .optional()
         .isString().withMessage('Nomor telepon harus berupa teks')
-        .trim(),
+        .trim().escape(),
 ]
 
 // GET BY UUID

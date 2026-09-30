@@ -17,7 +17,7 @@ const createTransaksiInternet = [
     body('keterangan')
         .notEmpty().withMessage('Keterangan wajib diisi')
         .isString().withMessage('Keterangan harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('bulan')
         .notEmpty().withMessage('Bulan wajib diisi')
@@ -52,7 +52,7 @@ const createTransaksiInternet = [
     body('expense_source')
         .optional()
         .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
-        .trim(),
+        .trim().escape(),
 ]
 
 // UPDATE Transaksi Internet
@@ -68,7 +68,7 @@ const updateTransaksiInternet = [
     body('keterangan')
         .optional()
         .isString().withMessage('Keterangan harus berupa teks')
-        .trim(),
+        .trim().escape(),
 
     body('bulan')
         .optional()
@@ -103,7 +103,7 @@ const updateTransaksiInternet = [
     body('expense_source')
         .optional()
         .isString().withMessage('Sumber dana pengeluaran harus berupa teks')
-        .trim(),
+        .trim().escape(),
 ]
 
 // GET BY UUID
