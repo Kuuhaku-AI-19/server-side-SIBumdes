@@ -7,11 +7,11 @@ const dbDialect = "postgres"
 
 module.exports = {
   db: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT) || 5432,
+    username: process.env.DB_USER || process.env.PGUSER,
+    password: process.env.DB_PASSWORD || process.env.PGPASSWORD,
+    database: process.env.DB_DATABASE || process.env.PGDATABASE,
+    host: process.env.DB_HOST || process.env.PGHOST,
+    port: parseInt(process.env.DB_PORT) || parseInt(process.env.PGPORT) || 5432,
     dialect: dbDialect,
   },
   server: {
