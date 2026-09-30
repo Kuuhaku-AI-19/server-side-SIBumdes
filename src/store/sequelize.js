@@ -4,14 +4,22 @@ const config = require('../config/config')
 const isTest = process.env.NODE_ENV === 'test'
 
 // Inisialisasi koneksi Sequelize
-const sequelize = isTest 
-    ? new Sequelize({ dialect: 'sqlite', storage: ':memory:', logging: false })
-    : new Sequelize(config.db.database, config.db.username, config.db.password, {
+let sequelize;
+if (isTest) {
+    sequelize = new Sequelize({ dialect: 'sqlite', storage: ':memory:', logging: false });
+} else if (process.env.DATABASE_URL) {
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+        dialect: config.db.dialect,
+        logging: false
+    });
+} else {
+    sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, {
         host: config.db.host,
         port: config.db.port,
         dialect: config.db.dialect,
         logging: false // Ubah ke console.log jika ingin melihat query SQL yang dieksekusi
-    })
+    });
+}
 
 // Test koneksi
 const testConnection = async () => {
@@ -60,6 +68,7 @@ db.syncDatabase = async () => {
         console.log('Database ter-sinkronisasi (Migrasi Selesai)!')
     } catch (error) {
         console.error('Gagal melakukan sinkronisasi database:', error)
+        throw error
     }
 }
 
